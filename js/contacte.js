@@ -1,13 +1,18 @@
-function getRow(firstName, lastName, phone) {
-    if(phone == undefined) {
-        phone = '';
-    }
-    if(typeof lastName == 'undefined') {
-        lastName = '';
-    }
-    //firstName = firstName || '';
+function getRow(contact) {
+    //if(phone == undefined//) {
+    //    phone = '';
+    //}
+    //if(typeof lastName == 'undefined') {
+    //    lastName = '';
+    //}
+    var id = contact.id || '';
+    var firstName = contact.firstName || '';
+    var lastName = contact.lastName || '';
+    var phone = contact.phone || '';
 
-    var row = '<tr><td>' + lastName + '</td><td>' + (firstName || '') + '</td><td>' + phone + '</td></tr>';
+    var row = '<tr><td>' + lastName + '</td><td>' + (firstName || '') + '</td><td>' + phone + '</td>' + '' +
+            '<td><a href="date/remove.html?id=' + id + '">[x]</a></td>' +
+        '</tr>';
     return row;
 }
 //$ ('#contacts-list tbody')[0].innerHTML = row;
@@ -17,24 +22,16 @@ function getRow(firstName, lastName, phone) {
     return row;
 }*/
 
-var contacte = [
-    {firstName: 'Alexandru',lastName: 'Techeres',phone: '0755604181'},
-    {firstName: 'Andrei',lastName: 'Popa',phone:'0755604182'},
-    {firstName:'Serban',lastName: 'Lupea',phone: '0755604183'},
-    {firstName: 'Mihai',lastName: 'Berar',phone: '0755604184'},
-    {firstName: 'Andrei'},
-    {lastName: 'Basescu'}
-];
 
 var person = {
     firstName: "Techeres",
     lastName: "Alexandru",
     age: 29,
     married: true,
-    skills: ["html", "css", "js"],
-    voicecall: function (nume) {
-        console.info('te rog sa suni pe ', nume)
-    }
+    skills: ["html", "css", "js"]
+    //voicecall: function (nume) {
+        //console.info('te rog sa o suni pe ', nume)
+    //}
 };
 
     /*kids: [
@@ -55,17 +52,33 @@ var person = {
         }
     ]*/
 
-console.info(person.firstName);
-person.voicecall("Soacra");
+//console.info(person.firstName);
+//person.voicecall("Soacra");
 
 var tableContent = '';
 
-for(var i = 0; i < contacte.length; i++) {
-    var contact = contacte [i];
-    tableContent += getRow(contact.firstName, contact.lastName, contact.phone);
+
+/*for(var i = 0; i < contacte.length; i++) {
+    createRow(contacte[i]);
+}*/
+
+function createRow(contact) {
+    tableContent += getRow(contact);
 }
 
-$("#contacts-list tbody").html(tableContent);
+$.ajax('date/contacte.json').done(function(contacte){
+    console.info('contacte ', contacte);
+    contacte.forEach(createRow);
+    $("#contacts-list tbody").html(tableContent);
+});
+
+
+
+/*function pentruToateContacteleExecuta () {
+    console.info('am executat ');
+}*/
+
+
 
 // #contacts-list tbody (color: red) pentru CSS
 
