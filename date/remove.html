@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="refresh" content="30">
-    <title>Title</title>
+    <meta http-equiv="refresh" content="5;url=../contacte.html">
+    <title>Remove Contact</title>
 </head>
 <body>
-Removed
+Contact Removed (<div id="contact-id"></div>)
 <script>
-
+    var id = location.search;
+    document.getElementById('contact-id').innerHTML = id;
 </script>
 
 </body>
