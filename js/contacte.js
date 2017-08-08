@@ -13,7 +13,7 @@ function getRow(contact) {
     var row = '<tr><td>' + lastName + '</td><td>' + (firstName || '') + '</td><td>' + phone + '</td>' + '' +
             '<td class ="actions">'+
                 '<span><a href="date/remove.html?id=' + id + '"> &#10008 </a></span>'+
-                '<span><a href="#"> &#9998 </a></span>'+
+                '<span><a class="edit" href="#"> &#9998 </a></span>'+
         '</td>' +
         '</tr>';
     return row;
@@ -69,11 +69,21 @@ function createRow(contact) {
     tableContent += getRow(contact);
 }
 
-$.ajax('date/contacte.json').done(function(contacte){
-    console.info('contacte ', contacte);
+$.ajax('date/contacte.json', {cache: false}).done(function(contacte){
+    console.debug('contacte ', contacte);
     contacte.forEach(createRow);
     $("#contacts-list tbody").html(tableContent);
 });
+
+function editContact(firstName, lastName, phone) {
+    $('input[name=firstName]').val(firstName);
+    $('input[name=lastName]').val(lastName);
+    $('input[name=phone]').val(phone);
+}
+
+// 1) TODO disable cache
+// 2) TODO response/content type (json)
+// 3) TODO status codes: 200, 404, 5**, 3**
 
 
 
@@ -90,3 +100,5 @@ $.ajax('date/contacte.json').done(function(contacte){
 // 2. load contacts from json file with AJAX
 // 3. remove contacts (UI)
 // 4. edit contact (UI)
+// 5. TODO PHP includes/templates
+// 6. TODO create new number (auto increment)
